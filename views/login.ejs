@@ -6,13 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Rent your favourite car</title>
-
-
-
     <!-- 
     - custom css link
   -->
-    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <!-- 
     - google font link
@@ -28,17 +25,181 @@
         crossorigin="anonymous"></script>
 </head>
 
+<header class="header" data-header>
+    <div class="container">
 
-<!--Login-->
-<body>
-    <div class="login-container">
-        <form class="login-form">
-            <h2>Login</h2>
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
+        <div class="overlay" data-overlay></div>
+
+        <a href="/" class="logo">
+            <h2>Sirish</h2>
+        </a>
+
+        <nav class="navbar" data-navbar>
+            <ul class="navbar-list">
+
+                <li>
+                    <a href="/" class="navbar-link" data-nav-link>Home</a>
+                </li>
+
+                <li>
+                    <a href="#featured-car" class="navbar-link" data-nav-link>Explore cars</a>
+                </li>
+
+                <li>
+                    <a href="#" class="navbar-link" data-nav-link>About us</a>
+                </li>
+
+                <li>
+                    <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+                </li>
+
+            </ul>
+        </nav>
+
+        <div class="header-actions">
+
+            <div class="header-contact">
+                <a href="tel:88002345678" class="contact-link">9863942484</a>
+
+                <span class="contact-time">Sun - Sat: 9:00 am - 6:00 pm</span>
+            </div>
+
+            <a href="#featured-car" class="btn" aria-labelledby="aria-label-txt">
+                <ion-icon name="car-outline"></ion-icon>
+
+                <span id="aria-label-txt">Explore cars</span>
+            </a>
+
+            <div class="dropdown">
+                <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                    aria-expanded="false" style="display: flex; align-items: center;">
+                    <ion-icon name="person-outline"></ion-icon>
+                    </a>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="/login">Login</a></li>
+                    <li><a class="dropdown-item" href="/register">Register</a></li>
+
+                </ul>
+            </div>
+
+
+            <button class="nav-toggle-btn" data-nav-toggle-btn aria-label="Toggle Menu">
+                <span class="one"></span>
+                <span class="two"></span>
+                <span class="three"></span>
+            </button>
+
+        </div>
+
     </div>
-</body>
+</header>
+
+<%- include("./foot.ejs") %>
+
+    <!--Login-->
+
+    <body>
+        <div class="login-container">
+            <form class="login-form">
+                <h2>Login</h2>
+                <label for="username">Email</label>
+                <input type="text" id="email" name="email" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <br>
+                <button type="button" id="loginBtn">Login</button>
+            </form>
+        </div>
+    </body>
+
+
+    <script>
+
+        $("#loginBtn").on("click", (e) => {
+            e.preventDefault();
+
+            let email = $("#email").val();
+            let password = $("#password").val();
+
+            if (email == "") {
+                return Toast.fire({
+                    text: "Email is required !",
+                    icon: "error",
+                });
+            }
+
+            if (password == "") {
+                return Toast.fire({
+                    text: "Password is required !",
+                    icon: "error",
+                });
+            }
+
+            return fetch("/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email, password }),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.title == "user") {
+                        return Toast.fire({
+                            icon: "success",
+                            title:
+                                "Welcome back! You have successfully logged in as user",
+                        }).then(() => {
+                            location.href = `/dashboard/user`;
+                        });
+                    }
+                    if (data.title == "admin") {
+                        return Toast.fire({
+                            icon: "success",
+                            title:
+                                "Welcome back! You have successfully logged in as Admin",
+                        }).then(() => {
+
+                            location.href = `/dashboard/admin`;
+                        });
+                    }
+                    if (data.title == "no user") {
+                        return Swal.fire({
+                            title: "User doesn't exist ",
+                            text: "Do you want to register ?",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#014b92",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                location.href = `/register`;
+                            }
+                        });
+                    }
+
+                    if (data.title == "password") {
+                        return Toast.fire({
+                            icon: "error",
+                            title: "Incorrect Password !",
+                        }).then(() => {
+                        });
+                    }
+                    if (data.title == "error") {
+                        return Toast.fire({
+                            icon: "error",
+                            title: `There is an issue. Please check again later.!`,
+                        }).then(() => {
+                        });
+                    }
+                });
+        });
+
+
+
+
+
+
+    </script>

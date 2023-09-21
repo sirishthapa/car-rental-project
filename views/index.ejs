@@ -12,8 +12,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
+  <link rel="stylesheet" href="/css/style.css">
   <!-- 
     - google font link
   -->
@@ -39,67 +38,106 @@
 
       <div class="overlay" data-overlay></div>
 
-      <a href="#" class="logo">
-        <h2>Sirish</h2>
-      </a>
-
-      <nav class="navbar" data-navbar>
-        <ul class="navbar-list">
-
-          <li>
-            <a href="#home" class="navbar-link" data-nav-link>Home</a>
-          </li>
-
-          <li>
-            <a href="#featured-car" class="navbar-link" data-nav-link>Explore cars</a>
-          </li>
-
-          <li>
-            <a href="#" class="navbar-link" data-nav-link>About us</a>
-          </li>
-
-          <li>
-            <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
-          </li>
-
-        </ul>
-      </nav>
-
-      <div class="header-actions">
-
-        <div class="header-contact">
-          <a href="tel:88002345678" class="contact-link">9863942484</a>
-
-          <span class="contact-time">Sun - Sat: 9:00 am - 6:00 pm</span>
-        </div>
-
-        <a href="#featured-car" class="btn" aria-labelledby="aria-label-txt">
-          <ion-icon name="car-outline"></ion-icon>
-
-          <span id="aria-label-txt">Explore cars</span>
+      <% if(data?.fullName) { %>
+        <a href="/" class="logo">
+          <h5>
+            <%= data?.email %>
+          </h5>
         </a>
+        <% } else { %>
+          <a href="/" class="logo">
+            <h2>Sirish</h2>
+          </a>
+          <% } %>
 
-        <div class="dropdown">
-          <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-            aria-expanded="false" style="display: flex; align-items: center;">
-            <ion-icon name="person-outline"></ion-icon>
-            </a>
-          </button >
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><a class="dropdown-item" href="login.html">login</a></li>
-            <li><a class="dropdown-item" href="register.html">Register</a></li>
+            <nav class="navbar" data-navbar>
+              <ul class="navbar-list">
 
-          </ul>
-        </div>
+                <li>
+                  <a href="/" class="navbar-link" data-nav-link>Home</a>
+                </li>
+
+                <li>
+                  <a href="#featured-car" class="navbar-link" data-nav-link>Explore cars</a>
+                </li>
+
+                <li>
+                  <a href="#" class="navbar-link" data-nav-link>About us</a>
+                </li>
+
+                <li>
+                  <a href="#blog" class="navbar-link" data-nav-link>Blog</a>
+                </li>
+
+                <% if(data?.email) { %>
+                  <li>
+                    <a href="/dashboard/user/my-cars" class="navbar-link" data-nav-link>My Cars</a>
+                  </li>
+                  <% } %>
 
 
-        <button class="nav-toggle-btn" data-nav-toggle-btn aria-label="Toggle Menu">
-          <span class="one"></span>
-          <span class="two"></span>
-          <span class="three"></span>
-        </button>
+              </ul>
+            </nav>
 
-      </div>
+            <div class="header-actions">
+
+              <div class="header-contact">
+                <a href="tel:88002345678" class="contact-link">9863942484</a>
+
+                <span class="contact-time">Sun - Sat: 9:00 am - 6:00 pm</span>
+              </div>
+
+              <% if(data?.role=="admin" ) { %>
+                <a href="/dashboard/admin" class="btn" aria-labelledby="aria-label-txt">
+                  <ion-icon name="car-outline"></ion-icon>
+
+                  <span id="aria-label-txt">Dashboard</span>
+                </a>
+
+                <% } else if (data?.role=="user" ) { %>
+
+                  <a href="/dashboard/user" class="btn" aria-labelledby="aria-label-txt">
+                    <ion-icon name="car-outline"></ion-icon>
+
+                    <span id="aria-label-txt">Dashboard</span>
+                  </a>
+
+                  <% } else { %>
+
+                    <a href="#featured-car" class="btn" aria-labelledby="aria-label-txt">
+                      <ion-icon name="car-outline"></ion-icon>
+
+                      <span id="aria-label-txt">Explore cars</span>
+                    </a>
+
+                    <% } %>
+
+                      <div class="dropdown">
+                        <button class="dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+                          aria-expanded="false" style="display: flex; align-items: center;">
+                          <ion-icon name="person-outline"></ion-icon>
+                          </a>
+                        </button>
+                        <% if(auth==true) { %>
+                          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                          </ul>
+                          <% } else { %>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                              <li><a class="dropdown-item" href="/login">Login</a></li>
+                              <li><a class="dropdown-item" href="/register">Register</a></li>
+                            </ul>
+                            <% } %>
+                      </div>
+
+
+                      <button class="nav-toggle-btn" data-nav-toggle-btn aria-label="Toggle Menu">
+                        <span class="one"></span>
+                        <span class="two"></span>
+                        <span class="three"></span>
+                      </button>
+
+            </div>
 
     </div>
   </header>
@@ -158,8 +196,6 @@
 
 
 
-
-
       <!-- 
         - #FEATURED CAR
       -->
@@ -183,7 +219,7 @@
               <div class="featured-car-card">
 
                 <figure class="card-banner">
-                  <img src="./assets/images/car-1.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
+                  <img src="/images/car-1.jpg" alt="Toyota RAV4 2021" loading="lazy" width="440" height="300"
                     class="w-100">
                 </figure>
 
@@ -235,7 +271,7 @@
                       <ion-icon name="heart-outline"></ion-icon>
                     </button>
 
-                    <button class="btn">Rent now</button>
+                    <button class="btn rentCar" type="button" onClick="rentCar(this)">Rent now</button>
 
                   </div>
 
@@ -248,7 +284,7 @@
               <div class="featured-car-card">
 
                 <figure class="card-banner">
-                  <img src="./assets/images/car-2.jpg" alt="BMW 3 Series 2019" loading="lazy" width="440" height="300"
+                  <img src="/images/car-2.jpg" alt="BMW 3 Series 2019" loading="lazy" width="440" height="300"
                     class="w-100">
                 </figure>
 
@@ -300,7 +336,7 @@
                       <ion-icon name="heart-outline"></ion-icon>
                     </button>
 
-                    <button class="btn">Rent now</button>
+                    <button class="btn rentCar" type="button" onClick="rentCar(this)">Rent now</button>
 
                   </div>
 
@@ -313,8 +349,8 @@
               <div class="featured-car-card">
 
                 <figure class="card-banner">
-                  <img src="./assets/images/car-3.jpg" alt="Volkswagen T-Cross 2020" loading="lazy" width="440"
-                    height="300" class="w-100">
+                  <img src="/images/car-3.jpg" alt="Volkswagen T-Cross 2020" loading="lazy" width="440" height="300"
+                    class="w-100">
                 </figure>
 
                 <div class="card-content">
@@ -365,7 +401,7 @@
                       <ion-icon name="heart-outline"></ion-icon>
                     </button>
 
-                    <button class="btn">Rent now</button>
+                    <button class="btn rentCar" type="button" onClick="rentCar(this)">Rent now</button>
 
                   </div>
 
@@ -378,8 +414,8 @@
               <div class="featured-car-card">
 
                 <figure class="card-banner">
-                  <img src="./assets/images/car-4.jpg" alt="Cadillac Escalade 2020" loading="lazy" width="440"
-                    height="300" class="w-100">
+                  <img src="/images/car-4.jpg" alt="Cadillac Escalade 2020" loading="lazy" width="440" height="300"
+                    class="w-100">
                 </figure>
 
                 <div class="card-content">
@@ -430,7 +466,7 @@
                       <ion-icon name="heart-outline"></ion-icon>
                     </button>
 
-                    <button class="btn">Rent now</button>
+                    <button class="btn rentCar" type="button" onClick="rentCar(this)">Rent now</button>
 
                   </div>
 
@@ -443,8 +479,8 @@
               <div class="featured-car-card">
 
                 <figure class="card-banner">
-                  <img src="./assets/images/car-5.jpg" alt="BMW 4 Series GTI 2021" loading="lazy" width="440"
-                    height="300" class="w-100">
+                  <img src="/images/car-5.jpg" alt="BMW 4 Series GTI 2021" loading="lazy" width="440" height="300"
+                    class="w-100">
                 </figure>
 
                 <div class="card-content">
@@ -495,7 +531,7 @@
                       <ion-icon name="heart-outline"></ion-icon>
                     </button>
 
-                    <button class="btn">Rent now</button>
+                    <button class="btn rentCar" type="button" onClick="rentCar(this)">Rent now</button>
 
                   </div>
 
@@ -508,7 +544,7 @@
               <div class="featured-car-card">
 
                 <figure class="card-banner">
-                  <img src="./assets/images/car-6.jpg" alt="BMW 4 Series 2019" loading="lazy" width="440" height="300"
+                  <img src="/images/car-6.jpg" alt="BMW 4 Series 2019" loading="lazy" width="440" height="300"
                     class="w-100">
                 </figure>
 
@@ -560,7 +596,7 @@
                       <ion-icon name="heart-outline"></ion-icon>
                     </button>
 
-                    <button class="btn">Rent now</button>
+                    <button class="btn rentCar" type="button" onClick="rentCar(this)">Rent now</button>
 
                   </div>
 
@@ -574,7 +610,85 @@
         </div>
       </section>
 
+      <script>
 
+        function rentCar(button) {
+          const carCard = button.closest('.featured-car-card'); // Get the parent car card element
+
+          // Retrieve data from the data-* attributes using JavaScript
+          const carName = carCard.querySelector('.card-title a').textContent;
+          const year = carCard.querySelector('.card-title-wrapper .year').getAttribute('value');
+          const people = carCard.querySelector('.card-list-item:nth-child(1) .card-item-text').textContent;
+          const fuelType = carCard.querySelector('.card-list-item:nth-child(2) .card-item-text').textContent;
+          const mileage = carCard.querySelector('.card-list-item:nth-child(3) .card-item-text').textContent;
+          const transmission = carCard.querySelector('.card-list-item:nth-child(4) .card-item-text').textContent;
+          const price = carCard.querySelector('.card-price strong').textContent;
+          const image = carCard.querySelector('.card-banner img').getAttribute('src')
+
+          Swal.fire({
+            title: "Are You Sure ? ",
+            text: "You want to rent this car",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#014b92",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes",
+          }).then((result) => {
+
+            if (result.isConfirmed) {
+
+              return fetch("/dashboard/user/rentCar", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ carName, year, people, fuelType, mileage, transmission, price, image }),
+              })
+                .then(res => res.json())
+                .then(data => {
+
+                  if (data.title == "already Booked") {
+                    return Toast.fire({
+                      icon: "error",
+                      title: "Car Already Rented !"
+                    })
+                  }
+
+                  if (data.title == "success") {
+                    return Toast.fire({
+                      icon: "success",
+                      title: "Car rented successfully !"
+                    }).then(() => {
+                      location.href = '/dashboard/user/my-cars'
+                    })
+                  }
+
+                  if (data.title == "error") {
+                    return Toast.fire({
+                      icon: "error",
+                      title: `There is an issue. Please check again later.!`,
+                    })
+                  }
+
+                })
+            }
+          })
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </script>
 
 
 
@@ -682,7 +796,7 @@
                 <figure class="card-banner">
 
                   <a href="#">
-                    <img src="./assets/images/blog-1.jpg" alt="Opening of new offices of the company" loading="lazy"
+                    <img src="/images/blog-1.jpg" alt="Opening of new offices of the company" loading="lazy"
                       class="w-100">
                   </a>
 
@@ -723,8 +837,7 @@
                 <figure class="card-banner">
 
                   <a href="#">
-                    <img src="./assets/images/blog-2.jpg" alt="What cars are most vulnerable" loading="lazy"
-                      class="w-100">
+                    <img src="/images/blog-2.jpg" alt="What cars are most vulnerable" loading="lazy" class="w-100">
                   </a>
 
                   <a href="#" class="btn card-badge">Repair</a>
@@ -764,7 +877,7 @@
                 <figure class="card-banner">
 
                   <a href="#">
-                    <img src="./assets/images/blog-3.jpg" alt="Statistics showed which average age" loading="lazy"
+                    <img src="/images/blog-3.jpg" alt="Statistics showed which average age" loading="lazy"
                       class="w-100">
                   </a>
 
@@ -805,7 +918,7 @@
                 <figure class="card-banner">
 
                   <a href="#">
-                    <img src="./assets/images/blog-4.jpg" alt="What's required when renting a car?" loading="lazy"
+                    <img src="/images/blog-4.jpg" alt="What's required when renting a car?" loading="lazy"
                       class="w-100">
                   </a>
 
@@ -846,8 +959,7 @@
                 <figure class="card-banner">
 
                   <a href="#">
-                    <img src="./assets/images/blog-5.jpg" alt="New rules for handling our cars" loading="lazy"
-                      class="w-100">
+                    <img src="/images/blog-5.jpg" alt="New rules for handling our cars" loading="lazy" class="w-100">
                   </a>
 
                   <a href="#" class="btn card-badge">Company</a>
@@ -904,7 +1016,7 @@
 
         <div class="footer-brand">
           <a href="#" class="logo">
-            <img src="./assets/images/logo.svg" alt="Ridex logo">
+            <img src="/images/logo.svg" alt="Ridex logo">
           </a>
 
           <p class="footer-text">
@@ -1022,14 +1134,11 @@
   <!-- 
     - custom js link
   -->
-  <script src="./assets/js/script.js"></script>
-
-  <!-- 
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="/js/script.js"></script>
 
 </body>
+
+<%- include("./foot.ejs") %>
+
 
 </html>

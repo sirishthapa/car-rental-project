@@ -19,13 +19,7 @@ const User = db.define("user", {
     password: {
         type: DataTypes.STRING,
     },
-    skills: {
-        type: DataTypes.JSON,
-    },
     phone: {
-        type: DataTypes.STRING,
-    },
-    dateOfBirth: {
         type: DataTypes.STRING,
     },
     photo: {
@@ -34,36 +28,12 @@ const User = db.define("user", {
     },
     role: {
         type: DataTypes.STRING,
-        defaultValue: "jobSeeker",
-    },
-    suspended: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: "user",
     },
     code: {
         type: DataTypes.STRING,
     },
-    otherDetails: {
-        type: DataTypes.JSON,
-    },
-    experience: {
-        type: DataTypes.JSON,
-    },
-    education: {
-        type: DataTypes.JSON,
-    },
-    language: {
-        type: DataTypes.JSON,
-    },
-    awards: {
-        type: DataTypes.JSON,
-    },
-    socials: {
-        type: DataTypes.JSON,
-    },
-    references: {
-        type: DataTypes.JSON,
-    },
+
 });
 
 
@@ -76,7 +46,7 @@ const Admin = db.define("admin", {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
     },
-    name: {
+    fullName: {
         type: DataTypes.STRING,
     },
     email: {
@@ -86,25 +56,60 @@ const Admin = db.define("admin", {
         type: DataTypes.STRING,
     },
     role: {
-        type: DataTypes.ENUM("admin", "superAdmin"),
+        type: DataTypes.STRING,
         defaultValue: "admin",
     },
     photo: {
         type: DataTypes.STRING,
         defaultValue: "img/default.png",
     },
-    suspended: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-    },
 });
 
+// Booked Cars
+const BookedCars = db.define("bookedCars", {
+    id: {
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: false,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+    },
+    carName: {
+        type: DataTypes.STRING,
+    },
+    year: {
+        type: DataTypes.STRING,
+    },
+    people: {
+        type: DataTypes.STRING,
+    },
+    fuelType: {
+        type: DataTypes.STRING,
+    },
+    mileage: {
+        type: DataTypes.STRING,
+    },
+    transmission: {
+        type: DataTypes.STRING,
+    },
+    price: {
+        type: DataTypes.STRING,
+    },
+    image: {
+        type: DataTypes.STRING,
+    }
+})
 
+// association
+
+User.hasMany(BookedCars)
+BookedCars.belongsTo(User);
 
 
 module.exports = {
     User,
-    Admin
+    Admin,
+    BookedCars
 };
 
 // db.sync({ alter: true });

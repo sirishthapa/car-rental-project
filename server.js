@@ -52,9 +52,8 @@ const userRoute = require("./routes/userDashboard");
 
 // Using Routes
 app.use("/", indexRoute);
+app.use("/dashboard/user", userRoute);
 app.use("/dashboard/admin", adminRoute);
-app.use("/dashboard/organization", organizationRoute);
-app.use("/dashboard/job-seeker", userRoute);
 
 // Server
 const port = process.env.PORT || 5000;
