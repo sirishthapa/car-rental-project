@@ -1,97 +1,153 @@
 <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
+<%- include("./foot.ejs") %>
 
-<!-- WB Section -->
-<div class="welcome-back">
-	<img class="user-image" src="/<%= data?.photo %>" alt="/">
-	<div class="user-section">
-		<div class="user-name">Hi, <%= data?.fullName %> !
+
+	<!-- WB Section -->
+	<div class="welcome-back">
+		<img class="user-image" src="/<%= data?.photo %>" alt="/">
+		<div class="user-section">
+			<div class="user-name">Hi, <%= data?.fullName %> !
+			</div>
 		</div>
 	</div>
-</div>
 
-<!-- Activity -->
-<div class="case activity">
-	<div class="case-title">
-		<h3>Recent Activity</h3>
+	<!-- Activity -->
+	<div class="case activity">
+		<div class="case-title">
+			<h3>Recent Activity</h3>
+		</div>
+		<div class="activity-table" id="activity-table">
+			<% for(let i=0; i< bookedCars.length; i++ ) { %>
+				<div data-order="1566923580" class="activity-item">
+					<div class="activity-date"><span>
+							<% const dateOptions={ year: 'numeric' , month: 'short' , day: '2-digit' }; %>
+								<%= bookedCars[i].createdAt.toLocaleDateString('en-US', dateOptions) %>
+						</span></div>
+					<div class="activity-desc"><span class="item-link">
+							<%= bookedCars[i].dataValues.user.dataValues.fullName %>
+						</span><span class="activity-desc2">Car Model:
+							<span class="estdesc">
+								<%= bookedCars[i].carName %>
+							</span></span></div>
+					<div class="activity-cost">
+						<span style="font-size: 14px; cursor: pointer; user-select: none;">
+							<button class="button" type="button" onclick="cancelBooking('<%= bookedCars[i].id %>')"
+								style="cursor: pointer;">
+								Cancel Booking
+							</button>
+						</span>
+					</div>
+				</div>
+				<% } %>
+
+		</div>
 	</div>
-	<div class="activity-table" id="activity-table">
-		<% for(let i=0; i< bookedCars.length; i++ ) { %>
-			<div data-order="1566923580" class="activity-item">
-				<div class="activity-date"><span>
-						<% const dateOptions={ year: 'numeric' , month: 'short' , day: '2-digit' }; %>
-							<%= bookedCars[i].createdAt.toLocaleDateString('en-US', dateOptions) %>
-					</span></div>
-				<div class="activity-desc"><span class="item-link">
-						<%= bookedCars[i].dataValues.user.dataValues.fullName %>
-					</span><span class="activity-desc2">Car Model:
-						<span class="estdesc">
-							<%= bookedCars[i].carName %>
-						</span></span></div>
-				<div class="activity-cost"><span style="font-size: 14px; cursor: pointer; user-select: none;"><a
-							href="/">View</a></span>
+
+	<!-- Sidebar Items -->
+	<div class="side-screen">
+		<!-- Team -->
+		<div class="case">
+			<div class="case-title">
+				<h3>My Team</h3>
+			</div>
+			<div class="team">
+				<div class="team-member" title="(You) Online now">
+					<div class="member-status online"></div>
+					<img
+						src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=TU">
+				</div>
+				<div class="team-member" title="Last seen 2 days ago in Salt Lake City, UT">
+					<div class="member-status offline"></div>
+					<img
+						src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=T2" />
+				</div>
+				<div class="team-member" title="Last seen 2 days ago in Salt Lake City, UT">
+					<div class="member-status offline"></div>
+					<img
+						src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=T2" />
+				</div>
+				<div class="team-member" title="Last seen 2 days ago in Salt Lake City, UT">
+					<div class="member-status offline"></div>
+					<img
+						src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=T2" />
 				</div>
 			</div>
-			<% } %>
-
-	</div>
-</div>
-
-<!-- Sidebar Items -->
-<div class="side-screen">
-	<!-- Team -->
-	<div class="case">
-		<div class="case-title">
-			<h3>My Team</h3>
 		</div>
-		<div class="team">
-			<div class="team-member" title="(You) Online now">
-				<div class="member-status online"></div>
-				<img
-					src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=TU">
+
+		<!-- Personal Notes -->
+		<div class="case">
+			<div class="case-title">
+				<h3>My Notes</h3>
 			</div>
-			<div class="team-member" title="Last seen 2 days ago in Salt Lake City, UT">
-				<div class="member-status offline"></div>
-				<img
-					src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=T2" />
+			<textarea class="notepad" rows="5"
+				placeholder="You have no notes ☹">Oh hey there, these are my notes</textarea>
+		</div>
+	</div>
+
+	<div class="page-footer">
+		<div class="footer-elements">
+			<div class="footer-top">
+				<div class="footer-link">Dashboard</div>
+				<div class="footer-link">Invoices</div>
+				<div class="footer-link">Schedule</div>
+				<div class="footer-link">Customers</div>
+
+				<span style="opacity: 0; visibility: invisible; margin: 0 auto;"></span>
 			</div>
-			<div class="team-member" title="Last seen 2 days ago in Salt Lake City, UT">
-				<div class="member-status offline"></div>
-				<img
-					src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=T2" />
-			</div>
-			<div class="team-member" title="Last seen 2 days ago in Salt Lake City, UT">
-				<div class="member-status offline"></div>
-				<img
-					src="https://ui-avatars.com/api/?length=2&amp;rounded=true&amp;uppercase=true&amp;size=118&amp;background=4285f4&amp;color=fff&amp;name=T2" />
+			<div class="footer-bottom">
+				<!--<img src='https://via.placeholder.com/100x24' />-->
+
+				<span style="opacity: 0; visibility: invisible; margin: 0 auto;"></span>
+
+				<p>Copyright © {application_name} LLC, 2013-2019. All rights reserved.</p>
 			</div>
 		</div>
 	</div>
 
-	<!-- Personal Notes -->
-	<div class="case">
-		<div class="case-title">
-			<h3>My Notes</h3>
-		</div>
-		<textarea class="notepad" rows="5" placeholder="You have no notes ☹">Oh hey there, these are my notes</textarea>
-	</div>
-</div>
 
-<div class="page-footer">
-	<div class="footer-elements">
-		<div class="footer-top">
-			<div class="footer-link">Dashboard</div>
-			<div class="footer-link">Invoices</div>
-			<div class="footer-link">Schedule</div>
-			<div class="footer-link">Customers</div>
+	<script>
 
-			<span style="opacity: 0; visibility: invisible; margin: 0 auto;"></span>
-		</div>
-		<div class="footer-bottom">
-			<!--<img src='https://via.placeholder.com/100x24' />-->
+		function cancelBooking(carId) {
 
-			<span style="opacity: 0; visibility: invisible; margin: 0 auto;"></span>
+			Swal.fire({
+				title: "Are You Sure ? ",
+				text: "You want to cancel this booking",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#014b92",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Yes",
+			}).then((result) => {
+				if (result.isConfirmed) {
 
-			<p>Copyright © {application_name} LLC, 2013-2019. All rights reserved.</p>
-		</div>
-	</div>
-</div>
+					return fetch(`/dashboard/admin/cancel-booking/${carId}`, {
+						method: "GET"
+					}).then(res => res.json())
+						.then(data => {
+
+							if (data.title == "error") {
+								return Toast.fire({
+									icon: "error",
+									title: "Something went wrong!"
+								})
+							}
+
+							if (data.title == "success") {
+								return Toast.fire({
+									icon: "success",
+									title: "Booking Cancelled"
+								}).then(() => {
+									location.reload()
+								})
+							}
+
+						})
+
+				}
+			})
+
+		}
+
+
+
+	</script>

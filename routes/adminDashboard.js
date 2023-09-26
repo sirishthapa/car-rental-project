@@ -38,6 +38,28 @@ Router.get("/", authCheckAdmin, async (req, res) => {
 })
 
 
+Router.get("/cancel-booking/:id", authCheckAdmin, async (req, res) => {
 
+    let carId = req.params.id;
+
+    const carToDel = await BookedCars.findByPk(carId)
+
+    if (!carToDel) {
+        var data = {
+            title: "error"
+        }
+        return resjson(data)
+    }
+
+
+    await carToDel.destroy()
+
+    var data = {
+        title: "success"
+    }
+
+    return res.json(data)
+
+})
 
 module.exports = Router
